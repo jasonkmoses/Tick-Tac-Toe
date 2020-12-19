@@ -2,17 +2,13 @@
 //  Created by jason Moses on 2019/09/13.
 //  Copyright Â© 2019 jason Moses. All rights reserved.
 #include <iostream>
-#include <random>
-#include <cstdlib>
-#include <curses.h>
-#include <time.h>
-#include <unistd.h>
 #include <iterator>
 #include <algorithm>
 #include <fstream>
 #include <vector>
 #include <numeric>
-const int width = 80, height = 16;
+#include <tuple>
+const int width = 80, height = 16; //NB NB NB NB NB Use Width and height to set for your consoles size 
 const int SIZE_OF_NAME_ARRAY = 20;
 int x , y;
 int Inp;
@@ -26,12 +22,7 @@ std::vector<int> value_to_pass_OX;
 std::vector<int> value_vector_of_int_x;
 std::vector<int> value_vector_of_int_y;
 void displayHowToPlay() {
-std::vector<char> char_grid_values;
-for (int e = 98; e < 106; e++)
-{
-   char_grid_values.push_back((char)e);
-}
-    std::cout<<"Type the alternative letter as shown in the figure below to place either a 0 or a X depending on the player!";
+    std::cout<<"Type the alternative letter as shown in the figure below to place either a O or a X depending on the player!";
     for (y = 0; y < height; y++)
     {
      for (x = 0 ; x < width; x++)
@@ -40,7 +31,7 @@ for (int e = 98; e < 106; e++)
          {
             std::cout<<" ";
          }
-          //draws |
+          //draws '|'
           else if
           (
 
@@ -53,7 +44,7 @@ for (int e = 98; e < 106; e++)
            {
            std::cout<<"|";
            }
-          //draws -
+          //draws '-'
           else if (
 
           (x>=35 && x<=38 && y==4)  ||
@@ -114,18 +105,19 @@ for (int e = 98; e < 106; e++)
           }
      }
  }
-   std::cout<<"Please ENTER letters (a b c d e f g h or i) Player 1 now! So the game may start";
+   std::cout<<"Please ENTER letters (a b c d e f g h or i) as instructed by the grid above Player 1 now! So the game may start";
 }
 void Logic(std::vector<bool> grids_vector,std::vector<int> O_X) {
       for (y = 0; y < height; y++)
       {
        for (x = 0 ; x < width; x++)
         {
+        //draws '#'
            if (x == 79 || x == 0)
            {
               std::cout<<"#";
            }
-            //draws |
+            //draws '|'
             else if
             (
 
@@ -138,7 +130,7 @@ void Logic(std::vector<bool> grids_vector,std::vector<int> O_X) {
              {
              std::cout<<"|";
              }
-            //draws -
+            //draws '-'
             else if (
 
             (x>=35 && x<=38 && y==4) ||
@@ -161,101 +153,101 @@ void Logic(std::vector<bool> grids_vector,std::vector<int> O_X) {
             else if (
 
             (
-            (grids_vector[0] == true && (x == 45 && y == 9)) && (O_X[0] == 1) ||
-            (grids_vector[1] == true && (x == 45 && y == 7)) && (O_X[1] == 1) ||
-            (grids_vector[2] == true && (x == 45 && y == 5)) && (O_X[2] == 1) ||
-            (grids_vector[3] == true && (x == 40 && y == 9)) && (O_X[3] == 1) ||
-            (grids_vector[4] == true && (x == 40 && y == 7)) && (O_X[4] == 1) ||
-            (grids_vector[5] == true && (x == 40 && y == 5)) && (O_X[5] == 1) ||
-            (grids_vector[6] == true && (x == 36 && y == 9)) && (O_X[6] == 1) ||
-            (grids_vector[7] == true && (x == 36 && y == 7)) && (O_X[7] == 1) ||
-            (grids_vector[8] == true && (x == 36 && y == 5)) && (O_X[8] == 1)
+             ((grids_vector[0] == true && (x == 45 && y == 9)) && (O_X[0] == 1)) ||
+             ((grids_vector[1] == true && (x == 45 && y == 7)) && (O_X[1] == 1)) ||
+             ((grids_vector[2] == true && (x == 45 && y == 5)) && (O_X[2] == 1)) ||
+             ((grids_vector[3] == true && (x == 40 && y == 9)) && (O_X[3] == 1)) ||
+             ((grids_vector[4] == true && (x == 40 && y == 7)) && (O_X[4] == 1)) ||
+             ((grids_vector[5] == true && (x == 40 && y == 5)) && (O_X[5] == 1)) ||
+             ((grids_vector[6] == true && (x == 36 && y == 9)) && (O_X[6] == 1)) ||
+             ((grids_vector[7] == true && (x == 36 && y == 7)) && (O_X[7] == 1)) ||
+             ((grids_vector[8] == true && (x == 36 && y == 5)) && (O_X[8] == 1))
             )
 
             )
             {
               std::cout<<"O";
             }
-            //down check win x if right
+            //check 3 O's underneath each other player one wins
             else if
             (
-            (O_X[0] == 1) && (O_X[1] == 1) && (O_X[2] == 1) ||
-            (O_X[3] == 1) && (O_X[4] == 1) && (O_X[5] == 1) ||
-            (O_X[6] == 1) && (O_X[7] == 1) && (O_X[8] == 1)
+             ((O_X[0] == 1) && (O_X[1] == 1) && (O_X[2] == 1)) ||
+             ((O_X[3] == 1) && (O_X[4] == 1) && (O_X[5] == 1)) ||
+             ((O_X[6] == 1) && (O_X[7] == 1) && (O_X[8] == 1))
             )
             {
-                std::cout<<"player one has won!";
+                std::cout<<"player one has won! (O)";
                 gameOVER = true;
             }
-            //straight line check win x if right
+            //check 3 O's next to each other player one wins
             else if
             (
-            (O_X[0] == 1) && (O_X[3] == 1) && (O_X[6] == 1) ||
-            (O_X[1] == 1) && (O_X[4] == 1) && (O_X[7] == 1) ||
-            (O_X[2] == 1) && (O_X[5] == 1) && (O_X[8] == 1)
+             ((O_X[0] == 1) && (O_X[3] == 1) && (O_X[6] == 1)) ||
+             ((O_X[1] == 1) && (O_X[4] == 1) && (O_X[7] == 1)) ||
+             ((O_X[2] == 1) && (O_X[5] == 1) && (O_X[8] == 1))
             )
             {
-                std::cout<<"player one has won!";
+                std::cout<<"player one has won! (O)";
                 gameOVER = true;
             }
-            //sloped line check win x if right
+            //check 3 O's diagonal to each other player one wins
             else if
             (
-            (O_X[8] == 1) && (O_X[4] == 1) && (O_X[0] == 1) ||
-            (O_X[2] == 1) && (O_X[4] == 1) && (O_X[6] == 1)
+             ((O_X[8] == 1) && (O_X[4] == 1) && (O_X[0] == 1)) ||
+             ((O_X[2] == 1) && (O_X[4] == 1) && (O_X[6] == 1))
             )
             {
-                std::cout<<"player one has won!";
+                std::cout<<"player one has won! (O)";
                 gameOVER = true;
             }
             else if (
 
             (
-            (grids_vector[0] == true && (x == 45 && y == 9)) && (O_X[0] == 2) ||
-            (grids_vector[1] == true && (x == 45 && y == 7)) && (O_X[1] == 2) ||
-            (grids_vector[2] == true && (x == 45 && y == 5)) && (O_X[2] == 2) ||
-            (grids_vector[3] == true && (x == 40 && y == 9)) && (O_X[3] == 2) ||
-            (grids_vector[4] == true && (x == 40 && y == 7)) && (O_X[4] == 2) ||
-            (grids_vector[5] == true && (x == 40 && y == 5)) && (O_X[5] == 2) ||
-            (grids_vector[6] == true && (x == 36 && y == 9)) && (O_X[6] == 2) ||
-            (grids_vector[7] == true && (x == 36 && y == 7)) && (O_X[7] == 2) ||
-            (grids_vector[8] == true && (x == 36 && y == 5)) && (O_X[8] == 2)
+             ((grids_vector[0] == true && (x == 45 && y == 9)) && (O_X[0] == 2)) ||
+             ((grids_vector[1] == true && (x == 45 && y == 7)) && (O_X[1] == 2)) ||
+             ((grids_vector[2] == true && (x == 45 && y == 5)) && (O_X[2] == 2)) ||
+             ((grids_vector[3] == true && (x == 40 && y == 9)) && (O_X[3] == 2)) ||
+             ((grids_vector[4] == true && (x == 40 && y == 7)) && (O_X[4] == 2)) ||
+             ((grids_vector[5] == true && (x == 40 && y == 5)) && (O_X[5] == 2)) ||
+             ((grids_vector[6] == true && (x == 36 && y == 9)) && (O_X[6] == 2)) ||
+             ((grids_vector[7] == true && (x == 36 && y == 7)) && (O_X[7] == 2)) ||
+             ((grids_vector[8] == true && (x == 36 && y == 5)) && (O_X[8] == 2))
             )
 
             )
             {
               std::cout<<"X";
             }
-            //down check win x if right
+            //check 3 X's diagonal to each other player two wins
             else if
             (
-            (O_X[0] == 2) && (O_X[1] == 2) && (O_X[2] == 2) ||
-            (O_X[3] == 2) && (O_X[4] == 2) && (O_X[5] == 2) ||
-            (O_X[6] == 2) && (O_X[7] == 2) && (O_X[8] == 2)
+             ((O_X[0] == 2) && (O_X[1] == 2) && (O_X[2] == 2)) ||
+             ((O_X[3] == 2) && (O_X[4] == 2) && (O_X[5] == 2)) ||
+             ((O_X[6] == 2) && (O_X[7] == 2) && (O_X[8] == 2))
             )
             {
-                std::cout<<"player two has won!";
+                std::cout<<"player two has won! (X)";
                 gameOVER = true;
             }
-            //straight line check win x if right
+            //check 3 X's diagonal to each other player two wins
             else if
             (
-            (O_X[0] == 2) && (O_X[3] == 2) && (O_X[6] == 2) ||
-            (O_X[1] == 2) && (O_X[4] == 2) && (O_X[7] == 2) ||
-            (O_X[2] == 2) && (O_X[5] == 2) && (O_X[8] == 2)
+             ((O_X[0] == 2) && (O_X[3] == 2) && (O_X[6] == 2)) ||
+             ((O_X[1] == 2) && (O_X[4] == 2) && (O_X[7] == 2)) ||
+             ((O_X[2] == 2) && (O_X[5] == 2) && (O_X[8] == 2))
             )
             {
-                std::cout<<"player two has won!";
+                std::cout<<"player two has won! (X)";
                 gameOVER = true;
             }
-            //sloped line check win x if right
+            //check 3 X's diagonal to each other player two wins
             else if
             (
-            (O_X[8] == 2) && (O_X[4] == 2) && (O_X[0] == 2) ||
-            (O_X[2] == 2) && (O_X[4] == 2) && (O_X[6] == 2)
+             ((O_X[8] == 2) && (O_X[4] == 2) && (O_X[0] == 2)) ||
+             ((O_X[2] == 2) && (O_X[4] == 2) && (O_X[6] == 2))
             )
             {
-                std::cout<<"player two has won!";
+                std::cout<<"player two has won! (X)";
                 gameOVER = true;
             }
             else {
@@ -264,19 +256,20 @@ void Logic(std::vector<bool> grids_vector,std::vector<int> O_X) {
        }}
 void Input() {
 bool flag = false;
-int p = 0;
 for (int t = 0; t < 9; t++)
 {
   grid_values_to_pass.push_back(false);
   value_to_pass_OX.push_back(0);
 }
-    char input;
+    char input = '\0';
     if (flag == false)
     {
      std::cin>>input;
     }
     //For loop code tracks which key user types into the ternimal
-    //into logic function and turns the flag of that grid to true all grids by defualt are set to false.
+    //into logic function and returns the flag of that grid to true all grids by defualt are set to false.
+    //when a grid flag is set to true one of the player icons will appear either X or O
+    //When set to false nothing will appear
     for (
        int i = 0;
        (
@@ -287,7 +280,6 @@ for (int t = 0; t < 9; t++)
        && gameOVER == false; i++
        )
        {
-    bool flag = true;
     std::cin>>input;
     std::cout<<"\a"<<std::endl;
     if (i % 2 == 0) {
@@ -424,11 +416,12 @@ outputFile.open
 "names.txt",
 std::ios::app|std::ios::out|std::ios::in
 );
+//saves names
 for(int p=0;p<1 && name!="";p++)
 {
     NAMES[p] = name;
     std::string str;
-    (p==0)?str=NAMES[p]+" ":str=","+NAMES[p]+" ";
+    (p==0)?str=NAMES[p]+"\n":str=","+NAMES[p]+"\n";
     outputFile<<str;
 }
 outputFile.close();
@@ -445,6 +438,7 @@ switch(Inp)
   for (int e = 0; e < SIZE_OF_NAME_ARRAY; e++)
   {
    ofile >> Names_To_Printed[e];
+      std::cout<<"Names of Players:"<<std::endl;
    std::cout<<Names_To_Printed[e];
   }
   break;
@@ -461,3 +455,6 @@ int main()
     std::cout<<"\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"<<std::endl;
     SideMenu();
    }
+
+
+
