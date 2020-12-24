@@ -1,4 +1,7 @@
 # Tick-Tac-Toe
+
+[![Join the chat at https://gitter.im/Tick-Tac-Toe/community](https://badges.gitter.im/Tick-Tac-Toe/community.svg)](https://gitter.im/Tick-Tac-Toe/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 #How to play the game
 
 1) The Game first starts with entering your names below saving a new record into the text file which can be read in the ternimal in the next steps
