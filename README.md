@@ -152,7 +152,7 @@ option 1) Start Game this will start the game by presenting a guide on how to pl
 
 #3) Player Identity whose the player places.
  
- Lastly depending on which player one we can also write not mathematical plotting into our scene but what to do when constraints are reached you guessed it with an else if function:
+ Lastly depending on which player is playing we can also plot into our scene but what to do when constraints are reached you guessed it with an else if function:
   
   this may seem almost impossible but it is quite easy we just use one of our three important variables i.e player identity O_X can check this by checking which values in the vector are set to either {0, 1, 2}
   
