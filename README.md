@@ -175,7 +175,7 @@ option 1) Start Game this will start the game by presenting a guide on how to pl
             
             
             
-            #Thank you for the lengthy read I wanted to explain things best as possible 
+            #Thank you for the lengthy read I wanted to explain things as best as possible 
             #created by Jason K Moses
  
  
