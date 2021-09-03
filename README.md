@@ -1,7 +1,7 @@
 # Tick-Tac-Toe
 #How to play the game
 
-1) The Game first starts with entering your names below saving a new record into the text file which can be read in the ternimal in the next steps
+1) The Game first starts with entering your names below saving a new record into the text file which can be read in the ternimal 
 
 2) Next The menu will be presented with 4 options:
 
